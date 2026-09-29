@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EFWD mandatory="true">
+<DataMaps>
+
+		<DataMap id="1" connection="1" type="metadata.dbmetadata">
+            <Name>getCatalog</Name>
+            <catalog>TABLE_CAT</catalog>
+            <Query>
+                <![CDATA[
+						 {"catalog":${catalogs},"schema":${schemas},"table":["TABLE","VIEW","COLLECTION"],"tablePattern":""}
+                ]]>
+            </Query>
+          <Parameters>
+            <Parameter name="catalogs" type="String" default="''"/>
+			 <Parameter name="schemas" type="String" default="''"/>
+        </Parameters>
+        </DataMap>
+		 
+		<DataMap id="4" connection="1" type="metadata.dbmetadata" >
+           <Name>getColumn</Name>
+            <Query>
+                <![CDATA[
+                       {"catalog":[${catalogs}],"schema":[${schemas}],"table":[${tables}],"columnPattern":""}
+                ]]>
+            </Query>
+			<Parameters>
+            <Parameter name="catalogs" type="String" default=""/>
+            <Parameter name="schemas" type="Collection" default="''"/>
+            <Parameter name="tables" type="Collection" default="Null"/>
+        </Parameters>
+        </DataMap>
+		
+</DataMaps> 
+</EFWD>

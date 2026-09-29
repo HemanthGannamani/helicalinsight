@@ -35,7 +35,7 @@ def staticDataSources = '''[ {
 ]''';
 
 
-def supportedArray = ["Oracle", "Mysql", "Apache Drill", "Microsoft Sqlserver",
+def supportedArray = ["Mongodb", "Oracle", "Mysql", "Apache Drill", "Microsoft Sqlserver",
                       "Postgresql", "IBM Db2", "Access", "Sqlite", "Teradata", "Mariadb", "Hive", "Informix", "Presto", "Derby", "Dremio",
                       "Snowflake","Elasticsearch","Trino","Google Bigquery","Amazon Dynamodb","Amazon Redshift","Celerdata","Yugabyte",
                       "Duckdb","Sap Db","Firebirdsql","API","Flatfile","Flatfile csv","Flatfile excel","Flatfile json","Flatfile aws","Flatfile Google spreadsheet","Flatfile parquet","Flatfile azure blobstorage" ,"Flatfile cloudfare r2","Flatfile GCS","Flatfile tsv","Athena","Ξ Add Driver Ξ"]
@@ -164,6 +164,9 @@ driverListArray.each {
         if(it.driver=="com.helical.FlatFileDriver") {
             modelJson.name=findDbName="Flatfile"
         }
+        if(it.driver=="com.mongodb.jdbc.MongoDriver" || it.driver=="com.helical.mongodb.MongoJdbcDriver") {
+            modelJson.name=findDbName="Mongodb"
+        }
 
 
         for (int i = 0; i < clonedSupportedFilesObject.size(); i++) {
@@ -181,6 +184,12 @@ driverListArray.each {
         if (findDbName.equals("Hive") || findDbName.equals("Apache Drill")) {
             modelJson.categoryName = "Big Data"
             modelJson.categoryType = "big_data"
+
+        } else if (findDbName.equals("Mongodb")) {
+            modelJson.categoryName = "No SQL & Big Data"
+            modelJson.categoryType = "nosql_bigdata"
+            modelJson.type = "global.jdbc"
+            modelJson.dataSourceProvider = "tomcat"
 
         } else if (Pattern.compile(Pattern.quote(modifiedMiddlewareName), Pattern.CASE_INSENSITIVE).matcher(findDbName).find()) {
             modelJson.categoryName = "Flat Files"
